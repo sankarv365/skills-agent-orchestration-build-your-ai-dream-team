@@ -1,0 +1,46 @@
+{
+  "projects": [
+    {
+      "name": "Cloud Migration Initiative",
+      "owner": "Sarah Chen",
+      "status": "Active",
+      "recentActivity": "Database schema optimization completed",
+      "priority": "High"
+    },
+    {
+      "name": "Mobile App Redesign",
+      "owner": "Marcus Thompson",
+      "status": "Active",
+      "recentActivity": "UI mockups approved by stakeholders",
+      "priority": "High"
+    },
+    {
+      "name": "API Documentation Update",
+      "owner": "Priya Patel",
+      "status": "Completed",
+      "recentActivity": "Final review and deployment completed",
+      "priority": "Medium"
+    },
+    {
+      "name": "Analytics Pipeline Enhancement",
+      "owner": "David Rodriguez",
+      "status": "Active",
+      "recentActivity": "Real-time data ingestion framework in development",
+      "priority": "Medium"
+    },
+    {
+      "name": "Security Infrastructure Audit",
+      "owner": "Emma Williams",
+      "status": "Pending",
+      "recentActivity": "Awaiting approval from compliance team",
+      "priority": "High"
+    },
+    {
+      "name": "Legacy System Refactoring",
+      "owner": "James Kim",
+      "status": "On Hold",
+      "recentActivity": "Waiting for resource allocation",
+      "priority": "Low"
+    }
+  ]
+}

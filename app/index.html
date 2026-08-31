@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Pulse</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Project Pulse</h1>
+                <p class="subtitle">Real-time project status and metrics</p>
+            </div>
+            <div class="metrics">
+                <div class="metric">
+                    <span class="metric-value" id="totalProjects">0</span>
+                    <span class="metric-label">Total Projects</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value" id="activeProjects">0</span>
+                    <span class="metric-label">Active</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value" id="completedProjects">0</span>
+                    <span class="metric-label">Completed</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <section class="projects-section">
+                <h2>Projects Overview</h2>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Project cards will be rendered here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        async function loadProjects() {
+            try {
+                const response = await fetch('project-data.json');
+                const data = await response.json();
+                const projects = data.projects || [];
+                
+                renderProjects(projects);
+                updateMetrics(projects);
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                document.getElementById('projectsGrid').innerHTML = 
+                    '<p class="error-message">Failed to load projects. Please try again.</p>';
+            }
+        }
+
+        function renderProjects(projects) {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+
+            if (projects.length === 0) {
+                grid.innerHTML = '<p class="no-projects">No projects found.</p>';
+                return;
+            }
+
+            projects.forEach(project => {
+                const card = createProjectCard(project);
+                grid.appendChild(card);
+            });
+        }
+
+        function createProjectCard(project) {
+            const article = document.createElement('article');
+            article.className = 'project-card';
+            
+            const statusClass = `status-${project.status.toLowerCase()}`;
+            const priorityClass = `priority-${project.priority.toLowerCase()}`;
+            
+            article.innerHTML = `
+                <div class="card-header">
+                    <h3>${escapeHtml(project.name)}</h3>
+                    <span class="status-badge ${statusClass}">${escapeHtml(project.status)}</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Owner:</span>
+                            <span class="meta-value">${escapeHtml(project.owner)}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Priority:</span>
+                            <span class="priority-badge ${priorityClass}">${escapeHtml(project.priority)}</span>
+                        </div>
+                    </div>
+                    <div class="recent-activity">
+                        <span class="activity-label">Recent Activity:</span>
+                        <span class="activity-value">${escapeHtml(project.recentActivity)}</span>
+                    </div>
+                </div>
+            `;
+            
+            return article;
+        }
+
+        function updateMetrics(projects) {
+            const total = projects.length;
+            const active = projects.filter(p => p.status.toLowerCase() === 'active').length;
+            const completed = projects.filter(p => p.status.toLowerCase() === 'completed').length;
+            
+            document.getElementById('totalProjects').textContent = total;
+            document.getElementById('activeProjects').textContent = active;
+            document.getElementById('completedProjects').textContent = completed;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProjects);
+    </script>
+</body>
+</html>
