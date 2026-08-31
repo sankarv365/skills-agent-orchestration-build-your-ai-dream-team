@@ -7,7 +7,11 @@
       "request": "launch",
       "cwd": "${workspaceFolder}/app",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "5501"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5500"
+      ],
       "serverReadyAction": {
         "pattern": "Serving HTTP on.*",
         "uriFormat": "http://localhost:%s/index.html",
